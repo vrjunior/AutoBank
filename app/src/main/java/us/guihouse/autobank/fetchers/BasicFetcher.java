@@ -13,13 +13,14 @@ public class BasicFetcher<REQUEST extends BasePostRequest<OUT>, OUT>
         extends AsyncTask<REQUEST, Void, OUT> {
 
     private static final String TAG = "BasicFetcher";
-    private Exception excpetion;
+    private Exception exception;
     private FetchCallback<OUT> callback;
 
     public interface FetchCallback<OUT> {
         void onSuccess(OUT data);
         void onNoConnection();
         void onError();
+        void onNoAuthentication();
     }
 
     public BasicFetcher(FetchCallback<OUT> callback) {
@@ -31,8 +32,10 @@ public class BasicFetcher<REQUEST extends BasePostRequest<OUT>, OUT>
         try {
             return params[0].executeRequest();
         } catch (BasePostRequest.RequestFail requestFail) {
-            excpetion = requestFail;
-            Log.d(TAG, excpetion.getMessage(), excpetion);
+            exception = requestFail;
+            Log.d(TAG, exception.getMessage(), exception);
+        } catch (BasePostRequest.NoAuthentication noAuthentication) {
+            exception = noAuthentication;
         }
 
         return null;
@@ -41,13 +44,18 @@ public class BasicFetcher<REQUEST extends BasePostRequest<OUT>, OUT>
     @Override
     protected void onPostExecute(OUT out) {
         super.onPostExecute(out);
-        if (excpetion == null) {
+        if (exception == null) {
             callback.onSuccess(out);
             return;
         }
 
-        if (excpetion instanceof BasePostRequest.NoConnection) {
+        if (exception instanceof BasePostRequest.NoConnection) {
             callback.onNoConnection();
+            return;
+        }
+
+        if(exception instanceof BasePostRequest.NoAuthentication ){
+            callback.onNoAuthentication();
             return;
         }
 

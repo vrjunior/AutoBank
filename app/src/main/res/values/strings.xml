@@ -13,4 +13,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="email_or_password_invalid">This email and/or password are not valid</string>
 </resources>

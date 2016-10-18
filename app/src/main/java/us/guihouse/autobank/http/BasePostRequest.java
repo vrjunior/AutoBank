@@ -21,13 +21,14 @@ public abstract class BasePostRequest<T> {
     private static final String TAG = "REQUEST_HTTP";
 
     public static class RequestFail extends Exception {}
+    public static class NoAuthentication extends Exception {}
     public static class NoConnection extends RequestFail {}
 
     protected abstract CharSequence getUploadData();
     protected abstract URL getUrl() throws MalformedURLException;
     protected abstract T convertResponse(String responseBody);
 
-    public T executeRequest() throws RequestFail {
+    public T executeRequest() throws RequestFail, NoAuthentication {
         if (!isInternetAvailable()) {
             throw new NoConnection();
         }
@@ -53,6 +54,9 @@ public abstract class BasePostRequest<T> {
 
             if (responseCode < 200 || responseCode > 299) {
                 throw new RequestFail();
+            }
+            if( responseCode == 401) {
+                throw new NoAuthentication();
             }
 
             String data = downloadData(new BufferedReader(new InputStreamReader(urlConnection.getInputStream())));

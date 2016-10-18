@@ -153,6 +153,12 @@ public class LoginActivity extends AppCompatActivity {
                 showProgress(false);
                 Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
             }
+
+            @Override
+            public void onNoAuthentication() {
+                showProgress(false);
+                mEmailView.setError(getString(R.string.email_or_password_invalid));
+            }
         });
         loginFetcher.execute(loginRequest);
 
