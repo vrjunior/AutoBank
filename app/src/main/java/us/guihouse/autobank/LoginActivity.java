@@ -3,36 +3,26 @@ package us.guihouse.autobank;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import us.guihouse.autobank.bean.Login;
+import us.guihouse.autobank.bean.Session;
+import us.guihouse.autobank.fetchers.BasicFetcher;
+import us.guihouse.autobank.http.LoginRequest;
 
 /**
  * A login screen that offers login via email/password.
@@ -43,6 +33,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Login loginAttempt;
+    private SharedPreferences sharedPrefe;
+    public static String SHARED_PREFE_FILE = "us.guihouse.autobank.tolken";
+    public static String SHARED_PREFE_TOLKEN = "tolken";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        sharedPrefe = getSharedPreferences(SHARED_PREFE_FILE, MODE_PRIVATE);
+        loginAttempt = new Login();
     }
 
 
@@ -92,25 +90,25 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        loginAttempt.setEmail(mEmailView.getText().toString());
+        loginAttempt.setPassword(mPasswordView.getText().toString());
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(loginAttempt.getPassword()) && !isPasswordValid(loginAttempt.getPassword())) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(loginAttempt.getEmail())) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!isEmailValid(loginAttempt.getEmail())) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
@@ -124,8 +122,40 @@ public class LoginActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            // TODO: Login
+            this.performLogin();
         }
+    }
+
+    private void performLogin() {
+        LoginRequest loginRequest = new LoginRequest(this.loginAttempt);
+
+        BasicFetcher<LoginRequest, Session> loginFetcher = new BasicFetcher<>(new BasicFetcher.FetchCallback<Session>() {
+            @Override
+            public void onSuccess(Session data) {
+                //updating sharedPreference
+                SharedPreferences.Editor editor = sharedPrefe.edit();
+                editor.putString(SHARED_PREFE_TOLKEN, data.getToken());
+                editor.commit();
+
+                //redirect to cardActivity
+                Intent openCardActivity = new Intent(LoginActivity.this, CardActivity.class);
+                startActivity(openCardActivity);
+            }
+
+            @Override
+            public void onNoConnection() {
+                showProgress(false);
+                Toast.makeText(LoginActivity.this, "Verifique sua conexão com a internet", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError() {
+                showProgress(false);
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+            }
+        });
+        loginFetcher.execute(loginRequest);
+
     }
 
     private boolean isEmailValid(String email) {

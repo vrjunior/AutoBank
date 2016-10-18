@@ -20,8 +20,8 @@ import java.net.URL;
 public abstract class BasePostRequest<T> {
     private static final String TAG = "REQUEST_HTTP";
 
-    public class RequestFail extends Exception {}
-    public class NoConnection extends RequestFail {}
+    public static class RequestFail extends Exception {}
+    public static class NoConnection extends RequestFail {}
 
     protected abstract CharSequence getUploadData();
     protected abstract URL getUrl() throws MalformedURLException;
@@ -58,6 +58,7 @@ public abstract class BasePostRequest<T> {
             String data = downloadData(new BufferedReader(new InputStreamReader(urlConnection.getInputStream())));
             return convertResponse(data);
         } catch (IOException e) {
+            Log.e("ERRO", e.getMessage(), e);
             throw new RequestFail();
         } finally {
             if(urlConnection != null)
@@ -101,6 +102,7 @@ public abstract class BasePostRequest<T> {
             return !ipAddr.equals("");
 
         } catch (IOException e) {
+            Log.e("ERRO", e.getMessage(), e);
             return false;
         }
 

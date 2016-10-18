@@ -1,10 +1,15 @@
 package us.guihouse.autobank.bean;
 
+import java.util.Date;
+
 /**
  * Created by aluno on 14/10/16.
  */
 
 public class Session {
+
+    private String token;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,5 +41,5 @@ public class Session {
         this.token = token;
     }
 
-    private String token;
+
 }

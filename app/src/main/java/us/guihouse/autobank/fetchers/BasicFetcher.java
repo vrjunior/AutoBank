@@ -30,7 +30,7 @@ public class BasicFetcher<REQUEST extends BasePostRequest<OUT>, OUT>
     protected OUT doInBackground(REQUEST... params) {
         try {
             return params[0].executeRequest();
-        } catch (BasePostRequest<OUT>.RequestFail requestFail) {
+        } catch (BasePostRequest.RequestFail requestFail) {
             excpetion = requestFail;
             Log.d(TAG, excpetion.getMessage(), excpetion);
         }
