@@ -24,6 +24,9 @@ import us.guihouse.autobank.bean.Session;
 import us.guihouse.autobank.fetchers.BasicFetcher;
 import us.guihouse.autobank.http.LoginRequest;
 
+import static us.guihouse.autobank.http.Constants.SHARED_PREFS_FILE;
+import static us.guihouse.autobank.http.Constants.SHARED_PREFS_TOKEN;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -35,8 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private View mLoginFormView;
     private Login loginAttempt;
     private SharedPreferences sharedPrefe;
-    public static String SHARED_PREFE_FILE = "us.guihouse.autobank.tolken";
-    public static String SHARED_PREFE_TOLKEN = "tolken";
+
 
 
     @Override
@@ -69,11 +71,9 @@ public class LoginActivity extends AppCompatActivity {
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        sharedPrefe = getSharedPreferences(SHARED_PREFE_FILE, MODE_PRIVATE);
+        sharedPrefe = getSharedPreferences(SHARED_PREFS_FILE, MODE_PRIVATE);
         loginAttempt = new Login();
     }
-
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(Session data) {
                 //updating sharedPreference
                 SharedPreferences.Editor editor = sharedPrefe.edit();
-                editor.putString(SHARED_PREFE_TOLKEN, data.getToken());
+                editor.putString(SHARED_PREFS_TOKEN, data.getToken());
                 editor.commit();
 
                 //redirect to cardActivity

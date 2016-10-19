@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by aluno on 08/09/16.
@@ -27,6 +28,12 @@ public abstract class BasePostRequest<T> {
     protected abstract CharSequence getUploadData();
     protected abstract URL getUrl() throws MalformedURLException;
     protected abstract T convertResponse(String responseBody);
+
+    protected void addHeaders(URLConnection urlConnection) {
+        urlConnection.addRequestProperty("Accept", "application/json");
+        urlConnection.setRequestProperty("Pragma", "no-cache");
+        urlConnection.setRequestProperty("Cache-Control", "no-cache");
+    }
 
     public T executeRequest() throws RequestFail, NoAuthentication {
         if (!isInternetAvailable()) {
@@ -43,10 +50,8 @@ public abstract class BasePostRequest<T> {
             urlConnection.setDefaultUseCaches(false);
             urlConnection.setUseCaches(false);
             urlConnection.setRequestMethod("POST");
-            urlConnection.addRequestProperty("Accept", "application/json");
-            urlConnection.setRequestProperty("Pragma", "no-cache");
-            urlConnection.setRequestProperty("Cache-Control", "no-cache");
 
+            this.addHeaders(urlConnection);
             this.uploadData(new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream())));
 
             int responseCode = urlConnection.getResponseCode();

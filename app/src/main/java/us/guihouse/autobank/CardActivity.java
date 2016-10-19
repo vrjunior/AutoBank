@@ -23,7 +23,5 @@ public class CardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card);
 
         tvTestTolken = (TextView) findViewById(R.id.testTolken);
-        sharedPrefe = getSharedPreferences(LoginActivity.SHARED_PREFE_FILE, MODE_PRIVATE);
-        tvTestTolken.setText(sharedPrefe.getString("tolken", "0"));
     }
 }
