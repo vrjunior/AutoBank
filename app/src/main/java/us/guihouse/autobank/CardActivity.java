@@ -3,6 +3,7 @@ package us.guihouse.autobank;
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -37,7 +38,7 @@ public class CardActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    private TabLayout tabLayout;
     private SharedPreferences sharedPrefe;
     private Session currentSession;
     private TextView tvTestTolken;
@@ -55,9 +56,9 @@ public class CardActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        tabLayout = (TabLayout)findViewById(R.id.tabLayout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
 
@@ -137,19 +138,17 @@ public class CardActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 2 total pages.
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return getString(R.string.tabTitleBills);
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
+                    return getString(R.string.tabTitleCard);
             }
             return null;
         }
