@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPrefe;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,18 +72,25 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPrefe = getSharedPreferences(SHARED_PREFS_FILE, MODE_PRIVATE);
         loginAttempt = new Login();
+        if(isTokenExists()) {
+            this.redirectToCardActivity();
+        }
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private void attemptLogin() {
-//        if (mAuthTask != null) {
-//            return;
-//        }
 
+    private boolean isTokenExists() {
+        if(sharedPrefe.getString(SHARED_PREFS_TOKEN, "-1").equals("-1")){
+            return false;
+        }
+        return true;
+    }
+
+    private void redirectToCardActivity() {
+        Intent openCardActivity = new Intent(LoginActivity.this, CardActivity.class);
+        startActivity(openCardActivity);
+    }
+
+    private void attemptLogin() {
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -137,9 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString(SHARED_PREFS_TOKEN, data.getToken());
                 editor.commit();
 
-                //redirect to cardActivity
-                Intent openCardActivity = new Intent(LoginActivity.this, CardActivity.class);
-                startActivity(openCardActivity);
+                redirectToCardActivity();
             }
 
             @Override

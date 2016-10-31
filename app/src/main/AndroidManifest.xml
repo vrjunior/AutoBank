@@ -23,7 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CardActivity"></activity>
+        <activity
+            android:name=".CardActivity"
+            android:label="@string/title_activity_card"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
