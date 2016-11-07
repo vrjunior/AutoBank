@@ -5,4 +5,7 @@ package us.guihouse.autobank.bean;
  */
 
 public class Bill {
+
+    
+
 }
