@@ -1,12 +1,9 @@
 package us.guihouse.autobank.http;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 
+import us.guihouse.autobank.bean.GenericBills;
 import us.guihouse.autobank.bean.Login;
 import us.guihouse.autobank.bean.Session;
 
@@ -16,16 +13,14 @@ import us.guihouse.autobank.bean.Session;
 
 public class LoginRequest extends BasePostRequest<Session> {
     private Login login;
-    private Gson gson;
 
     public LoginRequest(Login login) {
         this.login = login;
-        this.gson = new Gson();
     }
 
     @Override
     protected String getUploadData() {
-        return gson.toJson(login);
+        return this.getGson().toJson(login);
     }
 
     @Override
@@ -35,6 +30,6 @@ public class LoginRequest extends BasePostRequest<Session> {
 
     @Override
     protected Session convertResponse(String responseBody) {
-        return gson.fromJson(responseBody, Session.class);
+        return this.getGson().fromJson(responseBody, Session.class);
     }
 }

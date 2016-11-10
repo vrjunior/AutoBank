@@ -3,6 +3,8 @@ package us.guihouse.autobank.http;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -15,11 +17,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by aluno on 08/09/16.
- */
+import us.guihouse.autobank.bean.GenericBills;
+
+
 public abstract class BasePostRequest<T> {
     private static final String TAG = "REQUEST_HTTP";
+    private Gson gson = new Gson();
 
     public static class RequestFail extends Exception {}
     public static class NoAuthentication extends Exception {}
@@ -33,6 +36,10 @@ public abstract class BasePostRequest<T> {
         urlConnection.addRequestProperty("Accept", "application/json");
         urlConnection.setRequestProperty("Pragma", "no-cache");
         urlConnection.setRequestProperty("Cache-Control", "no-cache");
+    }
+
+    protected Gson getGson() {
+        return this.gson;
     }
 
     public T executeRequest() throws RequestFail, NoAuthentication {
@@ -65,7 +72,7 @@ public abstract class BasePostRequest<T> {
             }
 
             String data = downloadData(new BufferedReader(new InputStreamReader(urlConnection.getInputStream())));
-            return convertResponse(data);
+            return (T) convertResponse(data);
         } catch (IOException e) {
             Log.e("ERRO", e.getMessage(), e);
             throw new RequestFail();

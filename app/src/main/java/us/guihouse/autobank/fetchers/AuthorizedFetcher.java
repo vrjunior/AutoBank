@@ -1,5 +1,6 @@
 package us.guihouse.autobank.fetchers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 
 import us.guihouse.autobank.LoginActivity;
 import us.guihouse.autobank.R;
+import us.guihouse.autobank.bean.GenericBills;
 import us.guihouse.autobank.http.AuthenticatedRequest;
 
 import static us.guihouse.autobank.http.Constants.SHARED_PREFS_FILE;
@@ -23,25 +25,26 @@ public class AuthorizedFetcher<REQUEST extends AuthenticatedRequest<OUT>, OUT>
     private String token;
 
     public static abstract class AuthorizedFetchCallback<OUT> implements BasicFetcher.FetchCallback<OUT> {
-        private Context context;
+        private Activity activity;
 
         @Override
         public void onNoAuthentication() {
-            Toast.makeText(context, R.string.expired_session, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.activity, R.string.expired_session, Toast.LENGTH_LONG).show();
 
-            Intent i = new Intent(context, LoginActivity.class);
-            context.startActivity(i);
+            Intent i = new Intent(activity, LoginActivity.class);
+            this.activity.startActivity(i);
+            this.activity.finish();
         }
 
-        private void setContext(Context context) {
-            this.context = context;
+        private void setActivity(Activity activity) {
+            this.activity = activity;
         }
     }
 
-    public AuthorizedFetcher(Context context, AuthorizedFetchCallback<OUT> callback) {
+    public AuthorizedFetcher(Activity activity, AuthorizedFetchCallback<OUT> callback) {
         super(callback);
-        callback.setContext(context);
-        this.context = context;
+        callback.setActivity(activity);
+        this.context = activity;
     }
 
     @Override
