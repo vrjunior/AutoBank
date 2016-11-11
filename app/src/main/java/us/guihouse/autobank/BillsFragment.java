@@ -4,22 +4,30 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import us.guihouse.autobank.adapters.BillsAdapter;
 import us.guihouse.autobank.bean.GenericBills;
 import us.guihouse.autobank.fetchers.AuthorizedFetcher;
 import us.guihouse.autobank.fetchers.BasicFetcher;
 import us.guihouse.autobank.http.BasePostRequest;
 import us.guihouse.autobank.http.ListBillsRequest;
 
-public class BillsFragment extends Fragment {
+public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView rvBills;
     private GenericBills genericBills;
+    private BillsAdapter adapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private SwipeRefreshLayout srlBills;
 
     public BillsFragment() {
         // Required empty public constructor
@@ -36,33 +44,33 @@ public class BillsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.rvBills = (RecyclerView) getActivity().findViewById(R.id.rvBills);
-        ListBillsRequest listBillsRequest = new ListBillsRequest();
-        AuthorizedFetcher<ListBillsRequest, GenericBills> billsFetcher = new AuthorizedFetcher<>(getActivity() ,new AuthorizedFetcher.AuthorizedFetchCallback<GenericBills>() {
-
-            @Override
-            public void onSuccess(GenericBills data) {
-                genericBills = data;
-            }
-
-            @Override
-            public void onNoConnection() {
-                Toast.makeText(getActivity(), "Verifique sua conexão com a internet", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError() {
-                Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
-            }
-        });
-        billsFetcher.execute(listBillsRequest);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bills, container, false);
+        View view =  inflater.inflate(R.layout.fragment_bills, container, false);
+
+        this.rvBills = (RecyclerView) view.findViewById(R.id.rvBills);
+        this.srlBills = (SwipeRefreshLayout) view.findViewById(R.id.srlBills);
+        this.adapter = new BillsAdapter(this.getActivity());
+        this.rvBills.setAdapter(this.adapter);
+
+        //Diz para a recyclerView que o tamanho do layout não irá mudar durante a execução.
+        //Isso melhora a performance do app
+        rvBills.setHasFixedSize(true);
+
+        //Define o layout manager, que irá consumir do adapter, conforme necessário
+        mLayoutManager = new LinearLayoutManager(getContext());
+        rvBills.setLayoutManager(mLayoutManager);
+
+        this.srlBills.setOnRefreshListener(this);
+
+        this.refreshData();
+        this.srlBills.setRefreshing(true);
+
+        return view;
     }
 
     @Override
@@ -73,5 +81,39 @@ public class BillsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void refreshData() {
+        ListBillsRequest listBillsRequest = new ListBillsRequest();
+        AuthorizedFetcher<ListBillsRequest, GenericBills> billsFetcher = new AuthorizedFetcher<>(getActivity(), new AuthorizedFetcher.AuthorizedFetchCallback<GenericBills>() {
+            @Override
+            public void onSuccess(GenericBills data) {
+                setOrUpdateData(data);
+                srlBills.setRefreshing(false);
+            }
+
+            @Override
+            public void onNoConnection() {
+                Toast.makeText(getActivity(), "Verifique sua conexão com a internet", Toast.LENGTH_LONG).show();
+                srlBills.setRefreshing(false);
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
+                srlBills.setRefreshing(false);
+            }
+        });
+        billsFetcher.execute(listBillsRequest);
+    }
+
+    private void setOrUpdateData(GenericBills gb) {
+        this.genericBills = gb;
+        this.adapter.setContentList(gb.getGenericList());
+    }
+
+    @Override
+    public void onRefresh() { //SWIPEVIEW
+        this.refreshData();
     }
 }
