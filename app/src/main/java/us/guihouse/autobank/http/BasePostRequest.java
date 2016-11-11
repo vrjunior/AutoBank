@@ -4,6 +4,7 @@ package us.guihouse.autobank.http;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,7 +23,7 @@ import us.guihouse.autobank.bean.GenericBills;
 
 public abstract class BasePostRequest<T> {
     private static final String TAG = "REQUEST_HTTP";
-    private Gson gson = new Gson();
+    private Gson gson = new GsonBuilder().setDateFormat("MM-dd-yyyy").create();
 
     public static class RequestFail extends Exception {}
     public static class NoAuthentication extends Exception {}
