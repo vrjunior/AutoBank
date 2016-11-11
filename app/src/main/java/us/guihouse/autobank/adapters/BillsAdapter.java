@@ -38,7 +38,7 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bill_row_item, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bill_row_item, parent, false);
 
         CustomViewHolder viewHolder = new CustomViewHolder(view);
 
@@ -52,21 +52,17 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
         if(genericBill instanceof ClosedBill) {
             color = ContextCompat.getColor(mContext, R.color.colorClosedBill);
             ClosedBill currentClosedBill = (ClosedBill) genericBill;
-            holder.tvMonth.setText(Integer.toString(currentClosedBill.getMonth()));
-            holder.tvYear.setText(Integer.toString(currentClosedBill.getYear()));
+            holder.tvMonthYear.setText(String.format("%02d", currentClosedBill.getMonth()) + "/" + currentClosedBill.getYear());
             holder.tvValue.setText(String.format("R$ %.2f", currentClosedBill.getTotalValue()));
         }
         else {
             color = ContextCompat.getColor(mContext, R.color.colorOpenBill);
             OpenBill currentOpenBill = (OpenBill) genericBill;
-            holder.tvMonth.setText(Integer.toString(currentOpenBill.getMonth()));
-            holder.tvYear.setText(Integer.toString(currentOpenBill.getYear()));
+            holder.tvMonthYear.setText(String.format("%02d", currentOpenBill.getMonth()) + "/" + currentOpenBill.getYear());
             holder.tvValue.setText(String.format("R$ %.2f", currentOpenBill.getPartialValue()));
         }
 
         holder.tvValue.setTextColor(color);
-        holder.tvMonth.setTextColor(color);
-        holder.tvYear.setTextColor(color);
     }
 
     @Override
@@ -75,14 +71,12 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        protected TextView tvMonth;
-        protected TextView tvYear;
+        protected TextView tvMonthYear;
         protected TextView tvValue;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
-            this.tvMonth = (TextView) itemView.findViewById(R.id.tvMonth);
-            this.tvYear = (TextView) itemView.findViewById(R.id.tvYear);
+            this.tvMonthYear = (TextView) itemView.findViewById(R.id.tvMonthYear);
             this.tvValue = (TextView) itemView.findViewById(R.id.tvValue);
         }
     }
