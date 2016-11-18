@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#224680</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorClosedBill">#69F0AE</color>
+    <color name="colorClosedBillNotPaid">#F44336</color>
+    <color name="colorClosedBillPaid">#69F0AE</color>
     <color name="colorOpenBill">#2196F3</color>
 </resources>

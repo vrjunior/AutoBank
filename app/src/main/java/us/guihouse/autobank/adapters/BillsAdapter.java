@@ -50,8 +50,11 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
         Object genericBill = this.genericBills.get(position);
         int color;
         if(genericBill instanceof ClosedBill) {
-            color = ContextCompat.getColor(mContext, R.color.colorClosedBill);
             ClosedBill currentClosedBill = (ClosedBill) genericBill;
+            color = ContextCompat.getColor(mContext, R.color.colorClosedBillNotPaid);
+            if(currentClosedBill.getPaidValue().compareTo(currentClosedBill.getMinValue()) >= 0) {
+                color = ContextCompat.getColor(mContext, R.color.colorClosedBillPaid);
+            }
             holder.tvMonthYear.setText(String.format("%02d", currentClosedBill.getMonth()) + "/" + currentClosedBill.getYear());
             holder.tvValue.setText(String.format("R$ %.2f", currentClosedBill.getTotalValue()));
         }
