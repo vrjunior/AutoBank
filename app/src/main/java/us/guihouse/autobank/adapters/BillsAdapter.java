@@ -17,6 +17,7 @@ import us.guihouse.autobank.R;
 import us.guihouse.autobank.bean.Bill;
 import us.guihouse.autobank.bean.ClosedBill;
 import us.guihouse.autobank.bean.OpenBill;
+import us.guihouse.autobank.callbacks.BillsCallback;
 
 /**
  * Created by valmir.massoni on 07/11/2016.
@@ -26,9 +27,11 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
 
     private List<Object> genericBills;
     private Context mContext;
+    private BillsCallback callback;
 
-    public BillsAdapter(Context cx) {
+    public BillsAdapter(Context cx, BillsCallback callback) {
         this.mContext = cx;
+        this.callback = callback;
     }
 
     public void setContentList(List<Object> list) {
@@ -64,7 +67,6 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
             holder.tvMonthYear.setText(String.format("%02d", currentOpenBill.getMonth()) + "/" + currentOpenBill.getYear());
             holder.tvValue.setText(String.format("R$ %.2f", currentOpenBill.getPartialValue()));
         }
-
         holder.tvValue.setTextColor(color);
     }
 
@@ -73,7 +75,7 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
         return (this.genericBills != null)? this.genericBills.size(): 0;
     }
 
-    class CustomViewHolder extends RecyclerView.ViewHolder {
+    class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         protected TextView tvMonthYear;
         protected TextView tvValue;
 
@@ -81,6 +83,12 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
             super(itemView);
             this.tvMonthYear = (TextView) itemView.findViewById(R.id.tvMonthYear);
             this.tvValue = (TextView) itemView.findViewById(R.id.tvValue);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            callback.onRowClick(((Bill)genericBills.get(this.getAdapterPosition())).getId());
         }
     }
 }

@@ -1,6 +1,7 @@
 package us.guihouse.autobank;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,18 +17,20 @@ import java.util.ArrayList;
 
 import us.guihouse.autobank.adapters.BillsAdapter;
 import us.guihouse.autobank.bean.GenericBills;
+import us.guihouse.autobank.callbacks.BillsCallback;
 import us.guihouse.autobank.fetchers.AuthorizedFetcher;
 import us.guihouse.autobank.fetchers.BasicFetcher;
 import us.guihouse.autobank.http.BasePostRequest;
 import us.guihouse.autobank.http.ListBillsRequest;
 
-public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, BillsCallback {
 
     private RecyclerView rvBills;
     private GenericBills genericBills;
     private BillsAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout srlBills;
+    public static final String BILL_ID_EXTRA = "BILL_ID_EXTRA";
 
     public BillsFragment() {
         // Required empty public constructor
@@ -54,7 +57,7 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         this.rvBills = (RecyclerView) view.findViewById(R.id.rvBills);
         this.srlBills = (SwipeRefreshLayout) view.findViewById(R.id.srlBills);
-        this.adapter = new BillsAdapter(this.getActivity());
+        this.adapter = new BillsAdapter(this.getActivity(), this);
         this.rvBills.setAdapter(this.adapter);
 
         //Diz para a recyclerView que o tamanho do layout não irá mudar durante a execução.
@@ -115,5 +118,12 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onRefresh() { //SWIPEVIEW
         this.refreshData();
+    }
+
+    @Override
+    public void onRowClick(Long billId) {
+        Intent openStatementsIntent = new Intent(this.getActivity(), FinantialStatementsActivity.class);
+        openStatementsIntent.putExtra(this.BILL_ID_EXTRA, billId);
+        this.startActivity(openStatementsIntent);
     }
 }
