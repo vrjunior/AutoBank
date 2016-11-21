@@ -1,7 +1,10 @@
 package us.guihouse.autobank.bean.auxiliar;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
+import us.guihouse.autobank.bean.FinantialStatement;
 import us.guihouse.autobank.bean.InterestRate;
 import us.guihouse.autobank.bean.Payment;
 import us.guihouse.autobank.bean.Purchase;
@@ -47,5 +50,22 @@ public class GenericFinantialStatements {
 
     public void setReversals(ArrayList<Reversal> reversals) {
         this.reversals = reversals;
+    }
+
+    public ArrayList<Object> getGenericObjectList() {
+        ArrayList<Object> arrayObjects = new ArrayList<>();
+        arrayObjects.addAll(this.getPurchases());
+        arrayObjects.addAll(this.getInterestRates());
+        arrayObjects.addAll(this.getPayments());
+        arrayObjects.addAll(this.getReversals());
+
+        Collections.sort(arrayObjects, new Comparator<Object>() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return (((FinantialStatement)o2).getProcessDate().compareTo(((FinantialStatement)o1).getProcessDate()));
+            }
+        });
+
+        return arrayObjects;
     }
 }
