@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import us.guihouse.autobank.LoginActivity;
 import us.guihouse.autobank.R;
-import us.guihouse.autobank.bean.GenericBills;
 import us.guihouse.autobank.http.AuthenticatedRequest;
 
 import static us.guihouse.autobank.http.Constants.SHARED_PREFS_FILE;

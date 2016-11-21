@@ -1,8 +1,11 @@
-package us.guihouse.autobank.bean;
+package us.guihouse.autobank.bean.auxiliar;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import us.guihouse.autobank.bean.ClosedBill;
+import us.guihouse.autobank.bean.OpenBill;
 
 /**
  * Created by valmir.massoni on 10/11/2016.

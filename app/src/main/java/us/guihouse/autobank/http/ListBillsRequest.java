@@ -4,18 +4,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import us.guihouse.autobank.bean.Bill;
 import us.guihouse.autobank.bean.ClosedBill;
-import us.guihouse.autobank.bean.GenericBills;
-import us.guihouse.autobank.bean.Login;
+import us.guihouse.autobank.bean.auxiliar.GenericBills;
 import us.guihouse.autobank.bean.OpenBill;
 
 /**

@@ -3,7 +3,6 @@ package us.guihouse.autobank.http;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import us.guihouse.autobank.bean.GenericBills;
 import us.guihouse.autobank.bean.Login;
 import us.guihouse.autobank.bean.Session;
 

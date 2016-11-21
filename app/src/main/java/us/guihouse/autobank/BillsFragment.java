@@ -2,7 +2,6 @@ package us.guihouse.autobank;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,15 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import us.guihouse.autobank.adapters.BillsAdapter;
 import us.guihouse.autobank.bean.Bill;
-import us.guihouse.autobank.bean.GenericBills;
+import us.guihouse.autobank.bean.auxiliar.GenericBills;
 import us.guihouse.autobank.callbacks.BillsCallback;
 import us.guihouse.autobank.fetchers.AuthorizedFetcher;
-import us.guihouse.autobank.fetchers.BasicFetcher;
-import us.guihouse.autobank.http.BasePostRequest;
 import us.guihouse.autobank.http.ListBillsRequest;
 
 public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, BillsCallback {
