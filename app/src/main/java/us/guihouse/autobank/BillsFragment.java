@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import us.guihouse.autobank.adapters.BillsAdapter;
+import us.guihouse.autobank.bean.Bill;
 import us.guihouse.autobank.bean.GenericBills;
 import us.guihouse.autobank.callbacks.BillsCallback;
 import us.guihouse.autobank.fetchers.AuthorizedFetcher;
@@ -31,6 +32,8 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout srlBills;
     public static final String BILL_ID_EXTRA = "BILL_ID_EXTRA";
+    public static final String BILL_MONTH_EXTRA = "BILL_MONTH_EXTRA";
+    public static final String BILL_YEAR_EXTRA = "BILL_YEAR_EXTRA";
 
     public BillsFragment() {
         // Required empty public constructor
@@ -121,9 +124,11 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     @Override
-    public void onRowClick(Long billId) {
+    public void onRowClick(Bill bill) {
         Intent openStatementsIntent = new Intent(this.getActivity(), FinantialStatementsActivity.class);
-        openStatementsIntent.putExtra(this.BILL_ID_EXTRA, billId);
+        openStatementsIntent.putExtra(this.BILL_ID_EXTRA, bill.getId());
+        openStatementsIntent.putExtra(this.BILL_MONTH_EXTRA, bill.getMonth());
+        openStatementsIntent.putExtra(this.BILL_YEAR_EXTRA, bill.getYear());
         this.startActivity(openStatementsIntent);
     }
 }

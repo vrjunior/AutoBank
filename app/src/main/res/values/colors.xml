@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#224687</color>
     <color name="colorPrimaryDark">#224680</color>
+    <color name="secondaryColor">#0277BD</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorClosedBillNotPaid">#F44336</color>

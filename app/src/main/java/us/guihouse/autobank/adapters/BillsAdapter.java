@@ -88,7 +88,7 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
 
         @Override
         public void onClick(View v) {
-            callback.onRowClick(((Bill)genericBills.get(this.getAdapterPosition())).getId());
+            callback.onRowClick(((Bill)genericBills.get(this.getAdapterPosition())));
         }
     }
 }
