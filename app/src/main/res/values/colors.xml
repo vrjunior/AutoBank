@@ -8,4 +8,5 @@
     <color name="colorClosedBillNotPaid">#F44336</color>
     <color name="colorClosedBillPaid">#69F0AE</color>
     <color name="colorOpenBill">#2196F3</color>
+    <color name="greyBackground">#E0E0E0</color>
 </resources>

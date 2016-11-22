@@ -13,4 +13,7 @@ public class Constants {
 
     public static final String SHARED_PREFS_FILE = "us.guihouse.autobank.token";
     public static final String SHARED_PREFS_TOKEN = "token";
+
+    public static final String CATEGORY_IMG_PREFIX = "categories/";
+    public static final String CATEGORY_IMG_POSFIX = ".png";
 }

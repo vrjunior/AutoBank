@@ -1,6 +1,8 @@
 package us.guihouse.autobank.adapters;
 
 import android.app.Application;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,15 +14,19 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import us.guihouse.autobank.R;
+import us.guihouse.autobank.bean.FinantialStatement;
 import us.guihouse.autobank.bean.InterestRate;
 import us.guihouse.autobank.bean.Payment;
 import us.guihouse.autobank.bean.Purchase;
 import us.guihouse.autobank.bean.Reversal;
 import us.guihouse.autobank.bean.auxiliar.GenericFinantialStatements;
+import us.guihouse.autobank.http.Constants;
 
 /**
  * Created by valmir.massoni on 21/11/2016.
@@ -29,6 +35,11 @@ import us.guihouse.autobank.bean.auxiliar.GenericFinantialStatements;
 public class FinantialStatementAdapter  extends RecyclerView.Adapter {
 
     private ArrayList<Object> objectsData;
+    private Context mContext;
+
+    public FinantialStatementAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
 
     class GenericViewHolder extends RecyclerView.ViewHolder {
         protected TextView tvTitle;
@@ -95,9 +106,16 @@ public class FinantialStatementAdapter  extends RecyclerView.Adapter {
             PurchaseViewHolder purchaseHolder = (PurchaseViewHolder) holder;
             Purchase currentPurchase = (Purchase) genericObj;
 
+            InputStream ims;
+            try {
+                ims = this.mContext.getAssets().open(Constants.CATEGORY_IMG_PREFIX + currentPurchase.getCategoryName() + Constants.CATEGORY_IMG_POSFIX);
+                Drawable d = Drawable.createFromStream(ims, null);
+                purchaseHolder.ivCategory.setImageDrawable(d);
+            }catch (IOException e) {}
+
             purchaseHolder.tvDate.setText(dateFormat.format(currentPurchase.getProcessDate()));
             purchaseHolder.tvEstablishment.setText(currentPurchase.getEstablishmentName());
-            purchaseHolder.tvValue.setText(String.format("R$%.2f", currentPurchase.getPurchaseValue()));
+            purchaseHolder.tvValue.setText(String.format("R$%.2f", currentPurchase.getInstallmentValue()));
             purchaseHolder.tvInstallments.setText(currentPurchase.getInstallmentSequential() + "/" + currentPurchase.getInstallmentsAmount());
             return;
         }

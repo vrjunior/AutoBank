@@ -1,8 +1,6 @@
 package us.guihouse.autobank;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import us.guihouse.autobank.adapters.FinantialStatementAdapter;
 import us.guihouse.autobank.bean.FinantialStatement;
 import us.guihouse.autobank.bean.auxiliar.GenericFinantialStatements;
 import us.guihouse.autobank.fetchers.AuthorizedFetcher;
-import us.guihouse.autobank.http.Constants;
 import us.guihouse.autobank.http.FinantialStatementsRequest;
 
 public class FinantialStatementsActivity extends AppCompatActivity {
@@ -28,8 +25,6 @@ public class FinantialStatementsActivity extends AppCompatActivity {
     private RecyclerView rvFinantialStatements;
     private RecyclerView.LayoutManager mLayoutManager;
     private FinantialStatementAdapter finantialStatementAdapter;
-    private String token;
-    private SharedPreferences sharedPrefe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +36,12 @@ public class FinantialStatementsActivity extends AppCompatActivity {
         this.srlFinantialStatements = (SwipeRefreshLayout) findViewById(R.id.srlFinantialStements);
         this.rvFinantialStatements = (RecyclerView) findViewById(R.id.rvFinantialStatements);
 
-        this.sharedPrefe = this.getSharedPreferences(Constants.SHARED_PREFS_FILE, MODE_PRIVATE);
-        this.token = sharedPrefe.getString(Constants.SHARED_PREFS_TOKEN, "");
 
         //Define o layout manager, que irá consumir do adapter, conforme necessário
         mLayoutManager = new LinearLayoutManager(this);
         rvFinantialStatements.setLayoutManager(mLayoutManager);
 
-        finantialStatementAdapter = new FinantialStatementAdapter();
+        finantialStatementAdapter = new FinantialStatementAdapter(this);
         rvFinantialStatements.setAdapter(finantialStatementAdapter);
 
 
@@ -75,7 +68,6 @@ public class FinantialStatementsActivity extends AppCompatActivity {
     private void refreshData() {
         this.srlFinantialStatements.setRefreshing(true);
         final FinantialStatementsRequest finantialStatementsRequest = new FinantialStatementsRequest(this.idBill);
-        finantialStatementsRequest.setAuthorization(this.token);
         AuthorizedFetcher<FinantialStatementsRequest, GenericFinantialStatements> finantialStatementsFetcher = new AuthorizedFetcher<>(this, new AuthorizedFetcher.AuthorizedFetchCallback<GenericFinantialStatements>() {
             @Override
             public void onSuccess(GenericFinantialStatements data) {
