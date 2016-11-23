@@ -1,9 +1,7 @@
 package us.guihouse.autobank.adapters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import us.guihouse.autobank.R;
 import us.guihouse.autobank.bean.Bill;
@@ -25,7 +23,7 @@ import us.guihouse.autobank.callbacks.BillsCallback;
 
 public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHolder> {
 
-    private List<Object> genericBills;
+    private ArrayList<Object> genericBills;
     private Context mContext;
     private BillsCallback callback;
 
@@ -34,7 +32,7 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
         this.callback = callback;
     }
 
-    public void setContentList(List<Object> list) {
+    public void setContentList(ArrayList<Object> list) {
         this.genericBills = list;
         notifyDataSetChanged();
     }
@@ -73,6 +71,28 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
     @Override
     public int getItemCount() {
         return (this.genericBills != null)? this.genericBills.size(): 0;
+    }
+
+    public boolean restore(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            return false;
+        }
+
+        ArrayList<Object> toRestore = (ArrayList<Object>) savedInstanceState.getSerializable("bills");
+        if (toRestore == null || toRestore.isEmpty()) {
+            return false;
+        }
+
+        this.setContentList(toRestore);
+        return true;
+    }
+
+    public boolean hasData() {
+        return getItemCount() > 0;
+    }
+
+    public void save(Bundle outState) {
+        outState.putSerializable("bills", genericBills);
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

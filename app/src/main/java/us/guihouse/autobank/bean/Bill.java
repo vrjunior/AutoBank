@@ -1,12 +1,13 @@
 package us.guihouse.autobank.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by aluno on 18/10/16.
  */
 
-public abstract class Bill {
+public abstract class Bill implements Serializable {
     private Long id;
     private int month;
     private int year;

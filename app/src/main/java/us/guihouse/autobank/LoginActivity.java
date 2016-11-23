@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Build;
@@ -76,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
             this.redirectToCardActivity();
         }
     }
-
 
     private boolean isTokenExists() {
         if(sharedPrefe.getString(SHARED_PREFS_TOKEN, "-1").equals("-1")){

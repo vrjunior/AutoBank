@@ -31,8 +31,8 @@ public class GenericBills {
         this.closedBills = closedBills;
     }
 
-    public List<Object> getGenericList() {
-        List<Object> generic = new ArrayList<Object>();
+    public ArrayList<Object> getGenericList() {
+        ArrayList<Object> generic = new ArrayList<Object>();
         generic.addAll(openBills);
         generic.addAll(closedBills);
 

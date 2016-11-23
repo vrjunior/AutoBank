@@ -45,6 +45,8 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.adapter = new BillsAdapter(this.getActivity(), this);
+        adapter.restore(savedInstanceState);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         this.rvBills = (RecyclerView) view.findViewById(R.id.rvBills);
         this.srlBills = (SwipeRefreshLayout) view.findViewById(R.id.srlBills);
-        this.adapter = new BillsAdapter(this.getActivity(), this);
+
         this.rvBills.setAdapter(this.adapter);
 
         //Diz para a recyclerView que o tamanho do layout não irá mudar durante a execução.
@@ -68,10 +70,18 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         this.srlBills.setOnRefreshListener(this);
 
-        this.refreshData();
+        if (!adapter.hasData()) {
+            this.refreshData();
+        }
         this.srlBills.setRefreshing(true);
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        adapter.save(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

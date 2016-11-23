@@ -1,12 +1,13 @@
 package us.guihouse.autobank.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
  * Created by valmir.massoni on 19/10/2016.
  */
-public class Card {
+public class Card implements Serializable {
     private Long id;
 
     private BigDecimal limit;
