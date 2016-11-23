@@ -1,12 +1,13 @@
 package us.guihouse.autobank.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by valmir.massoni on 21/11/2016.
  */
 
-public abstract class FinantialStatement {
+public abstract class FinantialStatement implements Serializable {
     private Long id;
     private Date processDate;
 
