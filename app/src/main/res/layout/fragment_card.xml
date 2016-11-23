@@ -5,63 +5,73 @@
     tools:context="us.guihouse.autobank.CardFragment"
     android:layout_margin="@dimen/activity_horizontal_margin">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_card_progress"/>
 
-        <Button
-            android:text="@string/block_card"
+        <LinearLayout
+            android:id="@+id/fragment_card_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button2" />
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
+            <Button
+                android:text="@string/block_card"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2"
-                android:layout_weight="1" />
+                android:id="@+id/button2" />
 
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:gravity="right"
-                android:textAlignment="gravity"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:gravity="right"
+                    android:textAlignment="gravity"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/fab_margin">
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/fab_margin">
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView4"
-                android:layout_weight="1" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textAlignment="gravity"/>
-        </LinearLayout>
-    </LinearLayout>
+    </FrameLayout>
 </ScrollView>
