@@ -7,8 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
+import java.math.BigDecimal;
 
 public class CardFragment extends Fragment {
+
+    private ProgressBar pbLimit;
 
     public CardFragment() {
         // Required empty public constructor
@@ -28,8 +33,12 @@ public class CardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_card, container, false);
+        View view = inflater.inflate(R.layout.fragment_card, container, false);
+        pbLimit = (ProgressBar) view.findViewById(R.id.pbLimit);
+
+        pbLimit.setProgress(getPorcentageLimitUsed(new BigDecimal(1000), new BigDecimal(500)));
+
+        return view;
     }
 
     @Override
@@ -42,5 +51,9 @@ public class CardFragment extends Fragment {
         super.onDetach();
     }
 
+
+    private int getPorcentageLimitUsed(BigDecimal limit, BigDecimal valueUsed) {
+        return ((valueUsed.multiply(new BigDecimal(100)).divide(limit))).intValue();
+    }
 
 }

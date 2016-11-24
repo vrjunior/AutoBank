@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import us.guihouse.autobank.bean.Session;

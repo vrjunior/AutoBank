@@ -19,8 +19,7 @@ public class FinantialStatementsActivity extends AppCompatActivity {
     private Long idBill;
     private int month;
     private int year;
-    private TextView tvMonthBill;
-    private TextView tvYearBill;
+    private TextView tvMonthYearBill;
     private SwipeRefreshLayout srlFinantialStatements;
     private RecyclerView rvFinantialStatements;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -31,8 +30,7 @@ public class FinantialStatementsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finantial_statements);
 
-        this.tvMonthBill = (TextView) findViewById(R.id.tvMonthBill);
-        this.tvYearBill = (TextView) findViewById(R.id.tvYearBill);
+        this.tvMonthYearBill = (TextView) findViewById(R.id.tvMonthYearBill);
         this.srlFinantialStatements = (SwipeRefreshLayout) findViewById(R.id.srlFinantialStements);
         this.rvFinantialStatements = (RecyclerView) findViewById(R.id.rvFinantialStatements);
 
@@ -58,8 +56,7 @@ public class FinantialStatementsActivity extends AppCompatActivity {
             this.month = intent.getIntExtra(BillsFragment.BILL_MONTH_EXTRA, -1);
             this.year = intent.getIntExtra(BillsFragment.BILL_YEAR_EXTRA, -1);
 
-            this.tvMonthBill.setText(this.getMonthName(this.month));
-            this.tvYearBill.setText(Integer.toString(this.year));
+            this.tvMonthYearBill.setText(this.getMonthName(this.month) + " " + this.year);
 
             this.refreshData();
         }
