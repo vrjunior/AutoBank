@@ -5,7 +5,7 @@ package us.guihouse.autobank.http;
  */
 
 public class Constants {
-    public static final String BASE_URL = "http://10.0.3.207:8080/AutoBank/api/";
+    public static final String BASE_URL = "http://10.0.3.107:8080/AutoBank/api/";
     public static final String LOGIN_URL = BASE_URL + "login";
     public static final String BILLS_URL = BASE_URL + "bills";
     public static final String FINANTIAL_STATEMENTS_URL  = BASE_URL + "finantial-statements";

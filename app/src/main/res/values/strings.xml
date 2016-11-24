@@ -40,9 +40,16 @@
     <!-- Generic Finantial Statements Titles -->
     <string name="payment">Payment received</string>
     <string name="reversal">Reversal done</string>
-    <string name="interest_rate">Interest rate added</string>
+    <string name="interest_rate">Taxa de juros</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="block_card">Bloquear</string>
+    <string name="ending_digits">Final do cartão</string>
+    <string name="emission_date">Emitido em</string>
+    <string name="expiration_date">Expira em</string>
+    <string name="limit">Limite</string>
+    <string name="closing_day">Fechamento da Fatura</string>
+    <string name="available_value">Valor disponível</string>
+    <string name="used_value">Valor usado</string>
 </resources>
