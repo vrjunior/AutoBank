@@ -79,16 +79,12 @@ public class BillsAdapter extends RecyclerView.Adapter<BillsAdapter.CustomViewHo
         }
 
         ArrayList<Object> toRestore = (ArrayList<Object>) savedInstanceState.getSerializable("bills");
-        if (toRestore == null || toRestore.isEmpty()) {
+        if (toRestore == null) {
             return false;
         }
 
         this.setContentList(toRestore);
         return true;
-    }
-
-    public boolean hasData() {
-        return getItemCount() > 0;
     }
 
     public void save(Bundle outState) {

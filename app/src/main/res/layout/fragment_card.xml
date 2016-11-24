@@ -3,68 +3,225 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="us.guihouse.autobank.CardFragment"
+<<<<<<< HEAD
     android:paddingTop="10dp">
+=======
+    android:padding="@dimen/activity_horizontal_margin">
+>>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
+=======
+        android:layout_height="wrap_content">
+>>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
 
-        <Button
-            android:text="@string/block_card"
+        <ProgressBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button2" />
+            android:id="@+id/fragment_card_progress"/>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/fragment_card_details"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
+            <Button
+                android:text="@string/block_card"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2"
-                android:layout_weight="1" />
+                android:id="@+id/fragment_card_block" />
 
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:gravity="right"
-                android:textAlignment="gravity"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:text="@string/ending_digits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="9876"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_card_ending_digits"
+                    android:gravity="end"
+                    android:textAlignment="gravity"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/fab_margin">
+
+                <TextView
+                    android:text="@string/emission_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="15/01/2000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_card_emission"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/fab_margin">
+
+                <TextView
+                    android:text="@string/expiration_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="15/01/2000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_card_expire"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/fab_margin">
+
+                <TextView
+                    android:text="@string/limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="R$ 7.500,00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_card_limit"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/fab_margin">
+
+                <TextView
+                    android:text="@string/interest_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="10%"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_card_interest_rate"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/fab_margin">
+
+                <TextView
+                    android:text="@string/closing_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="10%"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_card_closing_date"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/fab_margin">
+
+                <TextView
+                    android:text="@string/available_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="R$ 1.234,50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_card_available"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/fab_margin">
+
+                <TextView
+                    android:text="@string/used_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:text="10%"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_card_used"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/fab_margin">
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView4"
-                android:layout_weight="1" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:textAlignment="gravity"/>
-        </LinearLayout>
+<<<<<<< HEAD
     </LinearLayout>
 
     <ProgressBar
@@ -77,3 +234,7 @@
         android:secondaryProgress="100"
         android:background="@color/greyBackground" />
 </RelativeLayout>
+=======
+    </FrameLayout>
+</ScrollView>
+>>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6

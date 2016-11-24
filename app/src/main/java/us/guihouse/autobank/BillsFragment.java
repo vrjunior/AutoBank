@@ -22,7 +22,6 @@ import us.guihouse.autobank.http.ListBillsRequest;
 public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, BillsCallback {
 
     private RecyclerView rvBills;
-    private GenericBills genericBills;
     private BillsAdapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout srlBills;
@@ -30,28 +29,16 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public static final String BILL_MONTH_EXTRA = "BILL_MONTH_EXTRA";
     public static final String BILL_YEAR_EXTRA = "BILL_YEAR_EXTRA";
 
-    public BillsFragment() {
-        // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static BillsFragment newInstance(String param1, String param2) {
-        BillsFragment fragment = new BillsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.adapter = new BillsAdapter(this.getActivity(), this);
-        adapter.restore(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_bills, container, false);
 
@@ -70,10 +57,9 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         this.srlBills.setOnRefreshListener(this);
 
-        if (!adapter.hasData()) {
+        if (!adapter.restore(savedInstanceState)) {
             this.refreshData();
         }
-        this.srlBills.setRefreshing(true);
 
         return view;
     }
@@ -84,22 +70,14 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
     private void refreshData() {
+        this.srlBills.setRefreshing(true);
+
         ListBillsRequest listBillsRequest = new ListBillsRequest();
         AuthorizedFetcher<ListBillsRequest, GenericBills> billsFetcher = new AuthorizedFetcher<>(getActivity(), new AuthorizedFetcher.AuthorizedFetchCallback<GenericBills>() {
             @Override
             public void onSuccess(GenericBills data) {
-                setOrUpdateData(data);
+                adapter.setContentList(data.getGenericList());
                 srlBills.setRefreshing(false);
             }
 
@@ -115,12 +93,8 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 srlBills.setRefreshing(false);
             }
         });
-        billsFetcher.execute(listBillsRequest);
-    }
 
-    private void setOrUpdateData(GenericBills gb) {
-        this.genericBills = gb;
-        this.adapter.setContentList(gb.getGenericList());
+        billsFetcher.execute(listBillsRequest);
     }
 
     @Override
