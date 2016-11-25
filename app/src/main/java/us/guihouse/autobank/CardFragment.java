@@ -1,23 +1,13 @@
 package us.guihouse.autobank;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-<<<<<<< HEAD
-
-import java.math.BigDecimal;
-=======
 import android.widget.TextView;
-
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.Currency;
@@ -26,22 +16,15 @@ import java.util.Locale;
 import us.guihouse.autobank.bean.Card;
 import us.guihouse.autobank.fetchers.AuthorizedFetcher;
 import us.guihouse.autobank.http.CardRequest;
->>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
 
 public class CardFragment extends Fragment {
     private static final String SAVED_CARD = "SAVED_CARD";
     private Card card;
 
-<<<<<<< HEAD
     private ProgressBar pbLimit;
 
-    public CardFragment() {
-        // Required empty public constructor
-    }
-=======
     private ProgressBar progress;
     private View details;
->>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
 
     private TextView cardNumber;
     private TextView emission;
@@ -57,6 +40,7 @@ public class CardFragment extends Fragment {
     private DateFormat dateFormat;
     private NumberFormat numberFormat;
     private NumberFormat percentFormat;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,14 +61,9 @@ public class CardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-<<<<<<< HEAD
+
         View view = inflater.inflate(R.layout.fragment_card, container, false);
-        pbLimit = (ProgressBar) view.findViewById(R.id.pbLimit);
-
-        pbLimit.setProgress(getPorcentageLimitUsed(new BigDecimal(1000), new BigDecimal(500)));
-
-        return view;
-=======
+        pbLimit = (ProgressBar) view.findViewById(R.id.fragment_card_pb_limit);
 
         if (savedInstanceState != null) {
             card = (Card) savedInstanceState.getSerializable(SAVED_CARD);
@@ -108,7 +87,6 @@ public class CardFragment extends Fragment {
         fetchCardIfNeeded();
 
         return inflated;
->>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
     }
 
     @Override
@@ -172,17 +150,14 @@ public class CardFragment extends Fragment {
         emission.setText(dateFormat.format(card.getEmission()));
         expiration.setText(dateFormat.format(card.getExpiration()));
 
-<<<<<<< HEAD
-    private int getPorcentageLimitUsed(BigDecimal limit, BigDecimal valueUsed) {
-        return ((valueUsed.multiply(new BigDecimal(100)).divide(limit))).intValue();
-    }
-
-=======
         limit.setText(numberFormat.format(card.getLimit()));
         interestRate.setText(percentFormat.format(card.getInterestRate()));
         closingDay.setText(card.getClosingDay().toString());
         availableValue.setText(numberFormat.format(card.getAvailableValue()));
         usedValue.setText(numberFormat.format(card.getUsedValue()));
+
+        pbLimit.setMax(card.getCurrentMaximum().setScale(0).intValue());
+        pbLimit.setProgress(card.getAvailableValue().setScale(0).intValue());
     }
 
     private void setError() {
@@ -192,5 +167,4 @@ public class CardFragment extends Fragment {
         progress.setVisibility(View.GONE);
         details.setVisibility(View.GONE);
     }
->>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
 }
