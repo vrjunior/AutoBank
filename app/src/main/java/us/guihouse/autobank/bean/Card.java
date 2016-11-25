@@ -100,4 +100,12 @@ public class Card implements Serializable {
     public void setUsedValue(BigDecimal usedValue) {
         this.usedValue = usedValue;
     }
+
+    public BigDecimal getCurrentMaximum() {
+        if (availableValue.compareTo(limit) > 0) {
+            return availableValue;
+        }
+
+        return limit;
+    }
 }
