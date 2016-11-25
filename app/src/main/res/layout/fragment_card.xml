@@ -1,24 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="us.guihouse.autobank.CardFragment"
-<<<<<<< HEAD
-    android:paddingTop="10dp">
-=======
     android:padding="@dimen/activity_horizontal_margin">
->>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
 
     <FrameLayout
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
-=======
-        android:layout_height="wrap_content">
->>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
 
         <ProgressBar
             android:layout_width="match_parent"
@@ -220,21 +212,16 @@
                     android:gravity="right"
                     android:textAlignment="gravity"/>
             </LinearLayout>
-        </LinearLayout>
-<<<<<<< HEAD
-    </LinearLayout>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:id="@+id/pbLimit"
-        android:progressTint="@color/colorOpenBill"
-        android:secondaryProgressTint="@color/colorClosedBillPaid"
-        android:secondaryProgress="100"
-        android:background="@color/greyBackground" />
-</RelativeLayout>
-=======
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:id="@+id/fragment_card_pb_limit"
+                android:progressTint="@color/colorOpenBill"
+                android:secondaryProgressTint="@color/colorClosedBillPaid"
+                android:secondaryProgress="100"
+                android:background="@color/greyBackground" />
+        </LinearLayout>
     </FrameLayout>
 </ScrollView>
->>>>>>> bdaf2193eae828e6cb86ccb82709c9d4decbffa6
