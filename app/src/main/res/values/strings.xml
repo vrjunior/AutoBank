@@ -52,4 +52,6 @@
     <string name="closing_day">Fechamento da Fatura</string>
     <string name="available_value">Valor disponível</string>
     <string name="used_value">Valor usado</string>
+    <string name="block_reason">Qual o motivo desse bloqueio?</string>
+    <string name="cancel">Cancelar</string>
 </resources>
