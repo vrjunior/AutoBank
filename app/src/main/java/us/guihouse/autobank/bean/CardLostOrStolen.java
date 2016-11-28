@@ -7,18 +7,18 @@ package us.guihouse.autobank.bean;
 public class CardLostOrStolen {
     public CardLostOrStolen(Long cardId, String comment) {
         this.cardId = cardId;
-        this.comment = comment;
+        this.clientComment = comment;
     }
 
     private Long cardId;
-    private String comment;
+    private String clientComment;
 
-    public String getComment() {
-        return comment;
+    public String getClientComment() {
+        return clientComment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setClientComment(String clientComment) {
+        this.clientComment = clientComment;
     }
 
     public Long getCardId() {
