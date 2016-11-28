@@ -54,4 +54,8 @@
     <string name="used_value">Valor usado</string>
     <string name="block_reason">Qual o motivo desse bloqueio?</string>
     <string name="cancel">Cancelar</string>
+    <string name="card_blocked">Cartão Bloqueado</string>
+    <string name="no_connection">Verifique sua conexão com a internet</string>
+    <string name="unknow_error">Erro Desconhecido</string>
+    <string name="blocking_card">Bloqueando Cartão</string>
 </resources>

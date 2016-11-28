@@ -83,7 +83,7 @@ public class BillsFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
             @Override
             public void onNoConnection() {
-                Toast.makeText(getActivity(), "Verifique sua conexão com a internet", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.no_connection, Toast.LENGTH_LONG).show();
                 srlBills.setRefreshing(false);
             }
 

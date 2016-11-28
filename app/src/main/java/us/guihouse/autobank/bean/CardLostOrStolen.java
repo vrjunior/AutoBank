@@ -5,6 +5,11 @@ package us.guihouse.autobank.bean;
  */
 
 public class CardLostOrStolen {
+    public CardLostOrStolen(Long cardId, String comment) {
+        this.cardId = cardId;
+        this.comment = comment;
+    }
+
     private Long cardId;
     private String comment;
 

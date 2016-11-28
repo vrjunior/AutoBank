@@ -3,9 +3,12 @@ package us.guihouse.autobank;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.text.DateFormat;
@@ -16,8 +19,9 @@ import java.util.Locale;
 import us.guihouse.autobank.bean.Card;
 import us.guihouse.autobank.fetchers.AuthorizedFetcher;
 import us.guihouse.autobank.http.CardRequest;
+import us.guihouse.autobank.other.CardLostOrStolenDialog;
 
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements View.OnClickListener {
     private static final String SAVED_CARD = "SAVED_CARD";
     private Card card;
 
@@ -34,12 +38,15 @@ public class CardFragment extends Fragment {
     private TextView closingDay;
     private TextView availableValue;
     private TextView usedValue;
+    private Button blockButton;
 
     private AuthorizedFetcher<CardRequest, Card> fetcher;
     private boolean destroyed = false;
     private DateFormat dateFormat;
     private NumberFormat numberFormat;
     private NumberFormat percentFormat;
+
+    private CardLostOrStolenDialog dialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +57,7 @@ public class CardFragment extends Fragment {
         numberFormat.setCurrency(Currency.getInstance("BRL"));
 
         percentFormat = NumberFormat.getPercentInstance(Locale.getDefault());
+        dialog = new CardLostOrStolenDialog();
     }
 
     @Override
@@ -82,6 +90,9 @@ public class CardFragment extends Fragment {
         closingDay = (TextView) inflated.findViewById(R.id.fragment_card_closing_date);
         availableValue = (TextView) inflated.findViewById(R.id.fragment_card_available);
         usedValue = (TextView) inflated.findViewById(R.id.fragment_card_used);
+
+        blockButton = (Button) inflated.findViewById(R.id.fragment_card_block);
+        blockButton.setOnClickListener(this);
 
         destroyed = false;
         fetchCardIfNeeded();
@@ -166,5 +177,18 @@ public class CardFragment extends Fragment {
         }
         progress.setVisibility(View.GONE);
         details.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == blockButton.getId()) {
+            showBlockCard();
+        }
+    }
+
+    private void showBlockCard() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        CardLostOrStolenDialog newFragment = CardLostOrStolenDialog.newInstance(card);
+        newFragment.show(fragmentManager, "missiles");
     }
 }
