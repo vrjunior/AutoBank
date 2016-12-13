@@ -1,5 +1,6 @@
 package us.guihouse.autobank;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -94,6 +95,15 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         blockButton = (Button) inflated.findViewById(R.id.fragment_card_block);
         blockButton.setOnClickListener(this);
 
+        Button btn = (Button) inflated.findViewById(R.id.fragment_card_refresh);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                card = null;
+                fetchCardIfNeeded();
+            }
+        });
+
         destroyed = false;
         fetchCardIfNeeded();
 
@@ -167,8 +177,8 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         availableValue.setText(numberFormat.format(card.getAvailableValue()));
         usedValue.setText(numberFormat.format(card.getUsedValue()));
 
-        pbLimit.setMax(card.getCurrentMaximum().setScale(0).intValue());
-        pbLimit.setProgress(card.getAvailableValue().setScale(0).intValue());
+        //pbLimit.setMax(card.getCurrentMaximum().setScale(0).intValue());
+        //pbLimit.setProgress(card.getAvailableValue().setScale(0).intValue());
     }
 
     private void setError() {

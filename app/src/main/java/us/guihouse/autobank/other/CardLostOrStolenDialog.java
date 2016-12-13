@@ -75,6 +75,7 @@ public class CardLostOrStolenDialog extends DialogFragment {
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         CardLostOrStolenDialog.this.getDialog().dismiss();
+                        CardLostOrStolenDialog.this.progressDialog.dismiss();
                     }
                 })
                 .setTitle(R.string.block_card)
